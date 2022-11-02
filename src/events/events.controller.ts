@@ -12,6 +12,7 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { LessThan, MoreThan, MoreThanOrEqual, Repository } from 'typeorm';
+import { Attendee } from './attendee.entity';
 import { CreateEventDto } from './create.events.dto';
 import { Events } from './event.entity';
 import { UpdateEventDto } from './update.event.dto';
@@ -21,6 +22,8 @@ export class EventsController {
   constructor(
     @InjectRepository(Events)
     private readonly repository: Repository<Events>,
+    @InjectRepository(Attendee)
+    private readonly attendeeRepository: Repository<Attendee>,
   ) {}
 
   @Get()
@@ -34,6 +37,11 @@ export class EventsController {
       where: { id: MoreThanOrEqual(3) },
     });
   }
+  @Get('test')
+  async test() {
+    return await this.attendeeRepository.find({relations:['events']});
+  }
+
   @Get(':id')
   async findOne(@Param('id', ParseIntPipe) id:number) {
     return await this.repository.findOne({ where: { id: id } });

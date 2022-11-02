@@ -5,10 +5,12 @@ import { Events } from "./event.entity"
 export class Attendee{
     @PrimaryGeneratedColumn()
     id:number
+
     @Column()
     name:string
 
     @ManyToOne(()=>Events, (event)=>event.attendee)
     @JoinColumn({name:'event_id'})
+    
     events:Events
 }

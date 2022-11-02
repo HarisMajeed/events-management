@@ -5,15 +5,20 @@ import { Attendee } from "./attendee.entity";
 export class Events{
     @PrimaryGeneratedColumn()
     id:number;
+
     @Column()
     name:string;
+
     @Column()
     description:string;
+
     @Column()
     when: Date;
+
     @Column()
     address:string;
 
     @OneToMany(()=>Attendee, (attendee) => attendee.events)
+    
     attendee: Attendee[]
 }
